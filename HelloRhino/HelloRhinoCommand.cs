@@ -26,7 +26,7 @@ namespace HelloRhino
         ///<returns>The command name as it appears on the Rhino command line.</returns>
         public override string EnglishName
         {
-            get { return "HelloRhinoCommand"; }
+            get { return "HelloDrawLine"; }
         }
 
         protected override Result RunCommand(RhinoDoc doc, RunMode mode)
@@ -62,9 +62,12 @@ namespace HelloRhino
                 pt1 = getPointAction.Point();
             }
 
-            doc.Objects.AddLine(pt0, pt1);
+            Rhino.Geometry.Line line1 = new Line(pt0, pt1);
+
+            doc.Objects.AddLine(line1);
             doc.Views.Redraw();
             RhinoApp.WriteLine("The {0} command added one line to the document.", EnglishName);
+            RhinoApp.WriteLine("The length of this new line is {0} {1}", line1.Length, doc.ModelUnitSystem.ToString().ToLower());
 
             // ---
 
